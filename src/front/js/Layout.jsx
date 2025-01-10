@@ -6,6 +6,9 @@ import ScrollToTop from "./component/ScrollToTop.jsx";
 import { BackendURL } from "./component/BackendURL.jsx";
 import { Navbar } from "./component/Navbar.jsx";
 import { Footer } from "./component/Footer.jsx";
+import { ContactsList } from "./component/ContactsList.jsx";
+import { AddContacts } from "./component/AddContacts.jsx";
+import { EditContacts } from "./component/EditContacts.jsx";
 //Custom Pages
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
@@ -24,11 +27,10 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
                     <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<ContactsList/>} path="/contacts" />
+                        <Route element={<AddContacts/>} path="/add-contact" />
+                        <Route element={<EditContacts/>} path="/edit-contact" />
                         <Route element={<Error404/>} path="*" />
                     </Routes>
                     <Footer />
