@@ -18,12 +18,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: "MarcosJuan",
 			contacts: [],
 			currentContact: {},
+			hostStarWars: "https://www.swapi.tech/api",
+			characters: [],
+			detailCharacters: {},
+			uidCharacters: '',
+			planets: [],
+			detailPlanets: {},
+			uidPlanets: '',
+			starships: [],
+			detailStarships: {},
+			uidStarships: '',
+			favorites: [],
 		},
 		actions: {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
 			setCurrentContact: (item) => {setStore({currentContact: item})},
+			addFavorites: (item) =>{
+				const favorites = getStore().favorites;
+				if(!favorites.includes(item)){
+				setStore({favorites: [...getStore().favorites,item]});
+				}
+			},
+			removeFavorites: (item) =>{
+				const favorites = getStore().favorites;
+				setStore({favorites:favorites.filter((favorite) => favorite != item)})
+			},
 			createAgenda: async () => {
 				const uri = `${getStore().host}/${getStore().user}`;
 				const options = {
@@ -98,6 +119,73 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return;
 				}
 				getActions().getContact();
+			},
+			getCharacters: async () => {
+				const uri = `${getStore().hostStarWars}/people`;	
+				const response = await fetch(uri);
+				if(!response.ok){
+					console.log('Error: ', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				console.log('Personajes obtenidos:', data.results); 
+				setStore({ characters: data.results });
+				localStorage.setItem( 'characters', JSON.stringify(data.results) );
+			},
+			getDetailCharacters: async (uid) => {
+				const uri = `${getStore().hostStarWars}/people/${uid}`;
+				const response = await fetch(uri);
+				if(!response.ok){
+					console.log('Error: ', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				setStore({ detailCharacters: data.result.properties });
+			},
+			getPlanets: async () => {
+				const uri = `${getStore().hostStarWars}/planets`;	
+				const response = await fetch(uri);
+				if(!response.ok){
+					console.log('Error: ', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				console.log('Planetas obtenidos:', data.results); 
+				setStore({ planets: data.results });
+				localStorage.setItem( 'planets', JSON.stringify(data.results) );
+			},	
+			getDetailPlanets: async (uid) => {
+				const uri = `${getStore().hostStarWars}/planets/${uid}`;
+				const response = await fetch(uri);
+				if(!response.ok){
+					console.log('Error: ', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				setStore({ detailPlanets: data.result.properties });
+			},
+			getStarships: async () => {
+				const uri = `${getStore().hostStarWars}/starships`;	
+				const response = await fetch(uri);
+				if(!response.ok){
+					console.log('Error: ', response.status, response.statusText);
+					return
+				}
+				const data = await response.json();
+				console.log('Starships obtenidos:', data.results); 
+				setStore({ starships: data.results });
+				localStorage.setItem( 'starships', JSON.stringify(data.results) );
+			},
+			getDetailStarships: async (uid) => {
+				const uri = `${getStore().hostStarWars}/starships/${uid}`;
+				const response = await fetch(uri);
+				if(!response.ok){
+					console.log('Error: ', response.status, response.statusText);
+					return
+				}
+		
+				const data = await response.json();
+				setStore({ detailStarships: data.result.properties });
 			},
 			getMessage: async () => {
 				try {
