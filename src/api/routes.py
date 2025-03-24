@@ -7,9 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.models import db, Users, Followers, Posts, Comments, Medias, Characters, CharacterFavorites, Planets, PlanetFavorites
 from datetime import datetime, timezone
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_jwt_extended import get_jwt
 
 
@@ -38,12 +36,28 @@ def login():
     user = row.serialize()
     claims = {'user_id': user['id'],
               'is_active': user['is_active']}
-    print(claims)
     access_token = create_access_token(identity=email, additional_claims=claims)
     response_body['access_token'] = access_token
     response_body['message'] = 'User logged'
     response_body['results'] = user
     return response_body, 200
+
+
+@api.route('/signup', methods=['POST'])
+def signup():
+    response_body = {}
+    if request.method == 'POST':
+        data = request.json
+        row = Users(
+                    first_name=data.get('first_name'),
+                    email=data.get('email'),
+                    password=data["password"],
+                    is_active=True)
+        db.session.add(row)
+        db.session.commit()
+        response_body['message'] = f'Nuevo usuario creado correctamente'
+        response_body['results'] = row.serialize()
+        return response_body, 200
 
 
 # Protect a route with jwt_required, which will kick out requests without a valid JWT present.
