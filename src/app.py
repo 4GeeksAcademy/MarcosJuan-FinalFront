@@ -10,6 +10,7 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import JWTManager
 # from models import Person
 
 
@@ -31,7 +32,9 @@ db.init_app(app)
 setup_admin(app) #  Add the admin
 setup_commands(app) #  Add the admin
 app.register_blueprint(api, url_prefix='/api') #  Add all endpoints form the API with a "api" prefix
-
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY')
+jwt = JWTManager(app)
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -57,7 +60,7 @@ def serve_any_other_file(path):
     return response
 
 
-#  This only runs if `$ python src/main.py` is executed
+#  This only runs if $ python src/main.py is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)

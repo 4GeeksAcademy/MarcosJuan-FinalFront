@@ -22,7 +22,7 @@ export const DetailStarships = () => {
             </div>
             <div className="row g-0">
                 <div className="col-md-4 d-flex justify-content-center align-items-start">
-                    <img src={`https://starwars-visualguide.com/assets/img/starships/${uid}.jpg`} className="card-img-top ms-5" alt={starship.name} style={{ height: "500px", width: "350px", objectFit: "cover" }} onError={handleImagen}/>
+                    <img src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/refs/heads/master/build/assets/img/starships/${uid}.jpg`} className="card-img-top ms-5" alt={starship.name} style={{ height: "500px", width: "350px", objectFit: "cover" }} onError={handleImagen}/>
                 </div>
                 <div className="col-md-8">
                     <div className="card-body text-white">
