@@ -18,7 +18,7 @@ export const DetailCharacters = () => {
             </div>
             <div className="row g-0">
                 <div className="col-md-4 d-flex justify-content-center align-items-start">
-                    <img src={`https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`} className="card-img-top ms-5" alt={character.name} style={{ height: "500px", width: "350px", objectFit: "cover" }} />
+                    <img src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/refs/heads/master/build/assets/img/characters/${uid}.jpg`} className="card-img-top ms-5" alt={character.name} style={{ height: "500px", width: "350px", objectFit: "cover" }} />
                 </div>
                 <div className="col-md-8">
                     <div className="card-body text-white">
