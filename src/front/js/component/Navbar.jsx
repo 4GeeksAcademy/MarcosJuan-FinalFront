@@ -12,11 +12,15 @@ export const Navbar = () => {
 		navigate('/login')
 	}
 
+	const handleLogin = () => {
+		navigate("/login")
+	}
+
 	return (
 		<div className="container-fluid px-0">
 			<nav className="navbar bg-dark">
 				<a className="navbar-brand" href="#">
-					<img src="https://img.icons8.com/?size=100&id=21576&format=png&color=000000" alt="Logo Starwars" width="110" height="80" className="ms-5" onClick={() => navigate("/")}/>
+					<img src="https://img.icons8.com/?size=100&id=21576&format=png&color=000000" alt="Logo Starwars" width="110" height="80" className="ms-5" onClick={() => navigate("/")} />
 				</a>
 				<ul className="nav justify-content-end">
 					<li className="nav-item">
@@ -58,11 +62,17 @@ export const Navbar = () => {
 							)}
 						</ul>
 					</div>
-					<li className="nav-item">
-						<button type="button" className="btn btn-outline-warning me-4" onClick={handleLogout}>Logout</button>
-					</li>
+					{store.isLogged ? (
+						<li className="nav-item">
+							<button type="button" className="btn btn-outline-warning me-4" onClick={handleLogout}>Logout</button>
+						</li>
+					) : (
+						<li className="nav-item">
+							<button type="button" className="btn btn-outline-warning me-4" onClick={handleLogin}>Login</button>
+						</li>
+					)}
 				</ul>
 			</nav>
-		</div >
+		</div>
 	);
 };

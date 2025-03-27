@@ -58,7 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!response.ok) return { status: 400, data: data }
 				localStorage.setItem("user", JSON.stringify(data.results))
 				localStorage.setItem("accessToken", data.access_token)
-				setStore({ user: data.results })
+				setStore({ isLogged:true, user: data.results })
 				return response;
 			},
 			signup: async (dataToSend) => {
@@ -87,7 +87,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logout: async () => {
 				localStorage.clear()
-				setStore({ user: null })
+				setStore({ user: null, isLogged: false })
 			},
 			checkAuth: async () => {
 				const token = localStorage.getItem("token");
